@@ -1,9 +1,8 @@
 ## Set up
 Please make sure you have installed `node`, `npm`, and `yarn`
 ```bash
-$ brew install node@16.14.0
-$ brew install npm@8.1.0
-$ brew install yarn@1.22.10
+$ brew install node
+$ brew install npm
 ```
 ## Run the project
 To run the project locally, please follow these steps:
