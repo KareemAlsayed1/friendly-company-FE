@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import LineChart from './linechart.js';
 import React, { useState} from 'react';
@@ -51,18 +50,26 @@ function App() {
     "China",
     "Germany",
   ]);
-
   const series = [{
     name: "Desktops",
     data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
   }];
 
+  let params = {
+    "company_name": "MICROSOFT"
+  };
+  
+  let query = Object.keys(params)
+               .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+               .join('&');
+  
+  let url = 'http://localhost:8000/search/?' + query;
   const getChartData = () => {
-		const fetchAPI = '/company-charts';
-		fetch(fetchAPI, {method: 'GET'})
+		const fetchAPI = url;
+		fetch(fetchAPI, {method: 'GET', params: JSON.stringify({"company_name": "MICROSOFT"})})
 		  .then(res => res.json())
 		  .then(data => {
-      if(data.hasOwnProperty('line_chart')){
+      if(data['data'].hasOwnProperty('approval_rate')){
          setLineOptions({
              chart: {
                height: 350,
@@ -88,15 +95,15 @@ function App() {
                 },
              },
              xaxis: {
-               categories: data['line_chart']['years'],
+               categories: data.data['approval_rate']['options']['xaxis']['categories'],
              }
            })
-         setLineSeries(data['line_chart']['approval_rate_over_years'])
+         setLineSeries(data['data']['approval_rate']['sesries']['data'])
       }
-      if(data.hasOwnProperty('bar_chart')){
-        setBarData(data['bar_chart']['company_data']);
-        setBarCategories(data['bar_chart']['categories']);
-      }
+      // if(data.hasOwnProperty('bar_chart')){
+      //   setBarData(data['bar_chart']['company_data']);
+      //   setBarCategories(data['bar_chart']['categories']);
+      // }
       }
 		).finally(() => {
 			// pass
@@ -107,6 +114,7 @@ function App() {
     <div className="App">
       <LineChart options={lineOptions} series={lineSeries} />
       <BarPlot data={barData} categories={barCategories}/>
+      <button onClick={getChartData}>Get Data</button>
     </div>
   );
 }
