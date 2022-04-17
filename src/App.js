@@ -4,6 +4,7 @@ import React, { useState, useEffect} from 'react';
 import BarPlot from "./BarPlot";
 import Select from 'react-select'
 import HashLoader from "react-spinners/HashLoader";
+import Filter from './filters';
 
 function App() {
   const [lineOptions, setLineOptions] = useState({
@@ -364,6 +365,7 @@ function App() {
     </div>
     ) : (
       <>
+      <Filter/>
       <LineChart options={lineOptions} series={lineSeries} />
       <BarPlot data={barData} options={barOptions}/>
       <LineChart options={waitingLineOptions} series={waitingLineSeries} />
