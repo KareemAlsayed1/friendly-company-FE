@@ -3,7 +3,7 @@ import { DATA_FOR_FILTERS } from "./constant";
 
 export default function Filter() {
   const data = DATA_FOR_FILTERS;
-  const [selectJobIndustry, setJobIndustry] = useState();
+  const [selectedJobIndustry, setJobIndustry] = useState();
   const [selectedState, setSelectedState] = useState();
   const [selectedCity, setSelectedCity] = useState();
 
@@ -16,7 +16,7 @@ export default function Filter() {
         <label>Job Industry</label>
         <select
           placeholder="jobIndustry"
-          value={selectJobIndustry}
+          value={selectedJobIndustry}
           onChange={(e) => setJobIndustry(e.target.value)}
         >
           <option>--Choose Job Industry--</option>
