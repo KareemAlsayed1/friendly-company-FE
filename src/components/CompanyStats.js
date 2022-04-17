@@ -11,11 +11,11 @@ export default function CompanyStats() {
   const [barOptions, setBarOptions] = useState([]);
   const [barData, setBarData] = useState([]);
 
-  const [wageBarOptions, setWageBarOptions] = useState({});
+  const [wageBarOptions, setWageBarOptions] = useState([]);
   const [wageBarData, setWageBarData] = useState([]);
   const [wageCurrentChoice, setWageCurrentChoice] = useState("");
 
-  const [waitingLineOptions, setWaitingLineOptions] = useState({});
+  const [waitingLineOptions, setWaitingLineOptions] = useState([]);
   const [waitingLineSeries, setWaitingLineSeries] = useState([]);
 
   const [savedData, setSavedData] = useState({});
@@ -75,14 +75,12 @@ export default function CompanyStats() {
           setWageCurrentChoice(key);
 
           setWageBarOptions(
-            data.data["average_wage_on_job"][key]["options"][
-              "xaxis"
-            ]["categories"]
+            data.data["average_wage_on_job"][key]["options"]["xaxis"][
+              "categories"
+            ]
           );
           setWageBarData(
-            data.data["average_wage_on_job"][key]["series"][
-              "data"
-            ]
+            data.data["average_wage_on_job"][key]["series"]["data"]
           );
         }
       })
