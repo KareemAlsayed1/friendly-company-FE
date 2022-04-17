@@ -5,195 +5,21 @@ import Select from "react-select";
 import HashLoader from "react-spinners/HashLoader";
 
 export default function CompanyStats() {
-  const [lineOptions, setLineOptions] = useState({
-    chart: {
-      height: 350,
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "straight",
-    },
-    title: {
-      text: "Approval rate over years",
-      align: "center",
-    },
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-        opacity: 0.5,
-      },
-    },
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
-    },
-  });
-  const [lineSeries, setLineSeries] = useState([
-    {
-      name: "Approval Rate",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-    },
-  ]);
+  const [lineOptions, setLineOptions] = useState([]);
+  const [lineSeries, setLineSeries] = useState([]);
 
-  const [barOptions, setBarOptions] = useState({
-    chart: {
-      type: "bar",
-      height: 350,
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories: [
-        "South Korea",
-        "Canada",
-        "United Kingdom",
-        "Netherlands",
-        "Italy",
-        "France",
-        "Japan",
-        "United States",
-        "China",
-        "Germany",
-      ],
-    },
-    title: {
-      text: "Number of applicants per job industry",
-      align: "center",
-      margin: 10,
-      offsetX: 0,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: "14px",
-        fontWeight: "bold",
-        fontFamily: undefined,
-        color: "#263238",
-      },
-    },
-  });
-  const [barData, setBarData] = useState([
-    400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380,
-  ]);
+  const [barOptions, setBarOptions] = useState([]);
+  const [barData, setBarData] = useState([]);
 
-  const [wageBarOptions, setWageBarOptions] = useState({
-    chart: {
-      type: "bar",
-      height: 350,
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories: [
-        "South Korea",
-        "Canada",
-        "United Kingdom",
-        "Netherlands",
-        "Italy",
-        "France",
-        "Japan",
-        "United States",
-        "China",
-        "Germany",
-      ],
-    },
-    title: {
-      text: "Average Wage Based on Job",
-      align: "center",
-      margin: 10,
-      offsetX: 0,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: "14px",
-        fontWeight: "bold",
-        fontFamily: undefined,
-        color: "#263238",
-      },
-    },
-  });
-  const [wageBarData, setWageBarData] = useState([
-    400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380,
-  ]);
-  const [wageCurrentChoice, setWageCurrentChoice] = useState(
-    "Computer and Mathematical Occupations"
-  );
+  const [wageBarOptions, setWageBarOptions] = useState({});
+  const [wageBarData, setWageBarData] = useState([]);
+  const [wageCurrentChoice, setWageCurrentChoice] = useState("");
 
-  const [waitingLineOptions, setWaitingLineOptions] = useState({
-    chart: {
-      height: 350,
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "straight",
-    },
-    title: {
-      text: "Waiting times over years",
-      align: "center",
-    },
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-        opacity: 0.5,
-      },
-    },
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
-    },
-  });
-  const [waitingLineSeries, setWaitingLineSeries] = useState([
-    {
-      name: "Waiting Time",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
-    },
-  ]);
+  const [waitingLineOptions, setWaitingLineOptions] = useState({});
+  const [waitingLineSeries, setWaitingLineSeries] = useState([]);
 
   const [savedData, setSavedData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [jobIndustries, setJobIndustries] = useState([]);
 
   let params = {
@@ -235,23 +61,30 @@ export default function CompanyStats() {
           );
           setWaitingLineSeries(data["data"]["waiting_time"]["series"]["data"]);
         }
-        setWageBarOptions(
-          data.data["average_wage_on_job"][wageCurrentChoice]["options"][
-            "xaxis"
-          ]["categories"]
-        );
-        setWageBarData(
-          data.data["average_wage_on_job"][wageCurrentChoice]["series"]["data"]
-        );
 
-        const tmp_options = [];
-        for (var key in data.data["average_wage_on_job"]) {
-          tmp_options.push({
-            "value": key,
-            "label": key,
-          });
+        if (data["data"].hasOwnProperty("average_wage_on_job")) {
+          const tmp_options = [];
+          for (var key in data.data["average_wage_on_job"]) {
+            tmp_options.push({
+              value: key,
+              label: key,
+            });
+          }
+          setJobIndustries(tmp_options);
+
+          setWageCurrentChoice(key);
+
+          setWageBarOptions(
+            data.data["average_wage_on_job"][key]["options"][
+              "xaxis"
+            ]["categories"]
+          );
+          setWageBarData(
+            data.data["average_wage_on_job"][key]["series"][
+              "data"
+            ]
+          );
         }
-        setJobIndustries(tmp_options);
       })
       .finally(() => {
         setLoading(false);
@@ -272,9 +105,9 @@ export default function CompanyStats() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    getChartData();
-  }, []);
+//   useEffect(() => {
+//     getChartData();
+//   }, []);
   return (
     <div>
       <div className="CompanyStats">
