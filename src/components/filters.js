@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
+import Button from '@mui/material/Button';
 
 import { DATA_FOR_FILTERS } from "./constant";
 
@@ -97,7 +98,7 @@ export default function Filter() {
             options={generateOptions(jobTypesList)}
           />
         </div>
-        <button type="submit">Find Companies</button>
+        <Button variant="outlined" type="submit">Find Companies</Button>
       </form>
     </div>
   );
