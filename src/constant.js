@@ -104,5 +104,16 @@ export const DATA_FOR_FILTERS = {
         id: 55,
       },
     ],
+
+    jobTypes: [
+        {
+            "name": "Full-time",
+            "id": 1
+        },
+        {
+            "name": "Part-time",
+            "id": 2
+        }
+    ]
   };
   
