@@ -194,38 +194,11 @@ export default function CompanyStats() {
 
   const [savedData, setSavedData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [jobIndustries, setJobIndustries] = useState([]);
 
   let params = {
     company_name: "MICROSOFT",
   };
-
-  const options = [
-    {
-      value: "Architecture and Engineering Occupations",
-      label: "Architecture and Engineering Occupations",
-    },
-    {
-      value: "Arts, Design, Entertainment, Sports, and Media Occupations",
-      label: "Arts, Design, Entertainment, Sports, and Media Occupations",
-    },
-    {
-      value: "Business and Financial Operations Occupations",
-      label: "Business and Financial Operations Occupations",
-    },
-    {
-      value: "Computer and Mathematical Occupations",
-      label: "Computer and Mathematical Occupations",
-    },
-    {
-      value: "Life, Physical, and Social Science Occupations",
-      label: "Life, Physical, and Social Science Occupations",
-    },
-    { value: "Management Occupations", label: "Management Occupations" },
-    {
-      value: "Sales and Related Occupations",
-      label: "Sales and Related Occupations",
-    },
-  ];
 
   let query = Object.keys(params)
     .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
@@ -243,155 +216,42 @@ export default function CompanyStats() {
       .then((data) => {
         setSavedData(data);
         if (data["data"].hasOwnProperty("approval_rate")) {
-          setLineOptions({
-            chart: {
-              height: 350,
-              type: "line",
-              zoom: {
-                enabled: false,
-              },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              curve: "straight",
-            },
-            title: {
-              text: "Approval rate over years",
-              align: "center",
-            },
-            grid: {
-              row: {
-                colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                opacity: 0.5,
-              },
-            },
-            xaxis: {
-              categories:
-                data.data["approval_rate"]["options"]["xaxis"]["categories"],
-            },
-          });
-          setLineSeries([
-            {
-              name: "Acceptance Rate",
-              data: data["data"]["approval_rate"]["series"]["data"],
-            },
-          ]);
+          setLineOptions(
+            data.data["approval_rate"]["options"]["xaxis"]["categories"]
+          );
+          setLineSeries(data.data["approval_rate"]["series"]["data"]);
         }
         if (data["data"].hasOwnProperty("applications_count_groups")) {
-          setBarOptions({
-            chart: {
-              type: "bar",
-              height: 350,
-            },
-            plotOptions: {
-              bar: {
-                borderRadius: 4,
-                horizontal: true,
-              },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            xaxis: {
-              categories:
-                data.data["applications_count_groups"]["options"]["xaxis"][
-                  "categories"
-                ],
-            },
-            title: {
-              text: "Number of applicants per job industry",
-              align: "center",
-              margin: 10,
-              offsetX: 0,
-              offsetY: 0,
-              floating: false,
-              style: {
-                fontSize: "14px",
-                fontWeight: "bold",
-                fontFamily: undefined,
-                color: "#263238",
-              },
-            },
-          });
+          setBarOptions(
+            data.data["applications_count_groups"]["options"]["xaxis"][
+              "categories"
+            ]
+          );
           setBarData(data.data["applications_count_groups"]["series"]["data"]);
         }
         if (data["data"].hasOwnProperty("waiting_time")) {
-          setWaitingLineOptions({
-            chart: {
-              height: 350,
-              type: "line",
-              zoom: {
-                enabled: false,
-              },
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            stroke: {
-              curve: "straight",
-            },
-            title: {
-              text: "Waiting time over years",
-              align: "center",
-            },
-            grid: {
-              row: {
-                colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-                opacity: 0.5,
-              },
-            },
-            xaxis: {
-              categories:
-                data.data["waiting_time"]["options"]["xaxis"]["categories"],
-            },
-          });
-          setWaitingLineSeries([
-            {
-              name: "Waiting Time",
-              data: data["data"]["waiting_time"]["series"]["data"],
-            },
-          ]);
+          setWaitingLineOptions(
+            data.data["waiting_time"]["options"]["xaxis"]["categories"]
+          );
+          setWaitingLineSeries(data["data"]["waiting_time"]["series"]["data"]);
         }
-        setWageBarOptions({
-          chart: {
-            type: "bar",
-            height: 350,
-          },
-          plotOptions: {
-            bar: {
-              borderRadius: 4,
-              horizontal: true,
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          xaxis: {
-            categories:
-              data.data["average_wage_on_job"][wageCurrentChoice]["options"][
-                "xaxis"
-              ]["categories"],
-          },
-          title: {
-            text: "Average Wage Based on Job",
-            align: "center",
-            margin: 10,
-            offsetX: 0,
-            offsetY: 0,
-            floating: false,
-            style: {
-              fontSize: "14px",
-              fontWeight: "bold",
-              fontFamily: undefined,
-              color: "#263238",
-            },
-          },
-        });
+        setWageBarOptions(
+          data.data["average_wage_on_job"][wageCurrentChoice]["options"][
+            "xaxis"
+          ]["categories"]
+        );
         setWageBarData(
           data.data["average_wage_on_job"][wageCurrentChoice]["series"]["data"]
         );
+
+        const tmp_options = [];
+        for (var key in data.data["average_wage_on_job"]) {
+          tmp_options.push({
+            "value": key,
+            "label": key,
+          });
+        }
+        setJobIndustries(tmp_options);
       })
       .finally(() => {
         setLoading(false);
@@ -401,41 +261,11 @@ export default function CompanyStats() {
   const changeWageSelection = (option) => {
     setLoading(true);
     setWageCurrentChoice(option.value);
-    setWageBarOptions({
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 4,
-          horizontal: true,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      xaxis: {
-        categories:
-          savedData.data["average_wage_on_job"][option.value]["options"][
-            "xaxis"
-          ]["categories"],
-      },
-      title: {
-        text: "Average Wage Based on Job",
-        align: "center",
-        margin: 10,
-        offsetX: 0,
-        offsetY: 0,
-        floating: false,
-        style: {
-          fontSize: "14px",
-          fontWeight: "bold",
-          fontFamily: undefined,
-          color: "#263238",
-        },
-      },
-    });
+    setWageBarOptions(
+      savedData.data["average_wage_on_job"][option.value]["options"]["xaxis"][
+        "categories"
+      ]
+    );
     setWageBarData(
       savedData.data["average_wage_on_job"][option.value]["series"]["data"]
     );
@@ -460,19 +290,32 @@ export default function CompanyStats() {
           </div>
         ) : (
           <>
-            <LineChart options={lineOptions} series={lineSeries} />
-            <BarPlot data={barData} options={barOptions} />
+            <LineChart
+              options={lineOptions}
+              series={lineSeries}
+              title={"Approval rate over years"}
+            />
+            <BarPlot
+              data={barData}
+              options={barOptions}
+              title={"Number of applicants per job industry"}
+            />
             <LineChart
               options={waitingLineOptions}
               series={waitingLineSeries}
+              title={"Waiting times over years"}
             />
             <Select
-              options={options}
+              options={jobIndustries}
               defaultValue={wageCurrentChoice}
               placeholder={wageCurrentChoice}
               onChange={changeWageSelection}
             />
-            <BarPlot data={wageBarData} options={wageBarOptions} />
+            <BarPlot
+              data={wageBarData}
+              options={wageBarOptions}
+              title={"Average wage based on job"}
+            />
             <button onClick={getChartData}>Get Data</button>
           </>
         )}
