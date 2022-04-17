@@ -6,6 +6,7 @@ export default function Filter() {
   const [selectedJobIndustry, setJobIndustry] = useState();
   const [selectedState, setSelectedState] = useState();
   const [selectedCity, setSelectedCity] = useState();
+  const [selectedJobType, setJobType] = useState();
 
   const availableCities = data.states.find((c) => c.name === selectedState);
 
@@ -60,6 +61,24 @@ export default function Filter() {
             return (
               <option value={e.name} key={key}>
                 {e}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+
+      <div>
+        <label>Job Type</label>
+        <select
+          placeholder="jobType"
+          value={selectedJobType}
+          onChange={(e) => setJobType(e.target.value)}
+        >
+          <option>--Choose Job Type--</option>
+          {data.jobIndustries.map((value, key) => {
+            return (
+              <option value={value.name} key={key}>
+                {value.name}
               </option>
             );
           })}
