@@ -210,7 +210,7 @@ export default function CompanyStats() {
     setLoading(true);
     fetch(fetchAPI, {
       method: "GET",
-      params: JSON.stringify({ company_name: "MICROSOFT" }),
+      params: JSON.stringify({ params }),
     })
       .then((res) => res.json())
       .then((data) => {
