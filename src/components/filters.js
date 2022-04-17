@@ -75,7 +75,7 @@ export default function Filter() {
           onChange={(e) => setJobType(e.target.value)}
         >
           <option>--Choose Job Type--</option>
-          {data.jobIndustries.map((value, key) => {
+          {data.jobTypes.map((value, key) => {
             return (
               <option value={value.name} key={key}>
                 {value.name}
