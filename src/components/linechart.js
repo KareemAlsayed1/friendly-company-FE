@@ -33,7 +33,7 @@ const LineChart = (props) => {
 
   const series = [
     {
-      name: "Approval Rate",
+      name: "Average",
       data: props.series,
     },
   ]

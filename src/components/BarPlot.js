@@ -34,11 +34,19 @@ const BarPlot = (props) => {
       },
     },
   };
+
+  const series = [
+    {
+      name: props.title,
+      data: props.data,
+    },
+  ]
+
   return (
     <div>
       <Chart
         options={options}
-        series={[{ data: props.data }]}
+        series={series}
         type="bar"
         height={350}
         title={props.title}
