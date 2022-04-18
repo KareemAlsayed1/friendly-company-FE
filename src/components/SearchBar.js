@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 
 import Paper from "@mui/material/Paper";
-import InputBase from '@mui/material/InputBase';
+import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-
 
 export default function SearchBar() {
   const [inputText, setInputText] = useState("");
@@ -13,10 +12,28 @@ export default function SearchBar() {
 
   const handleSubmit = () => {
     navigate({
-        pathname: '/company',
-        search: `?${createSearchParams({company_name : inputText})}`,
-      });
+      pathname: "/company",
+      search: `?${createSearchParams({ company_name: inputText })}`,
+    });
   };
+
+  useEffect(() => {
+    const listener = (event) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        console.log("Enter key was pressed.");
+        event.preventDefault();
+        navigate({
+          pathname: "/company",
+          search: `?${createSearchParams({ company_name: inputText })}`,
+        });
+        setInputText("");
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [navigate, inputText]);
 
   return (
     <div>
@@ -37,7 +54,11 @@ export default function SearchBar() {
             fullWidth
             placeholder="Or search company name"
           />
-          <IconButton onClick={handleSubmit} sx={{ p: "10px" }} aria-label="search">
+          <IconButton
+            onClick={handleSubmit}
+            sx={{ p: "10px" }}
+            aria-label="search"
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
