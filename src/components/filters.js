@@ -1,4 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import {
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import Select from "./Select";
@@ -6,6 +11,7 @@ import { DATA_FOR_FILTERS } from "./constant";
 
 export default function Filter() {
   const data = DATA_FOR_FILTERS;
+  const navigate = useNavigate();
   const [citiesList, setCitiesList] = useState([]);
   const jobIndustriesList = [];
   for (var key in data.jobIndustries) {
@@ -34,12 +40,21 @@ export default function Filter() {
     return tmp;
   };
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const definedState = searchParams.get("state");
   const [form, setForm] = useState({
-    jobIndustry: null,
-    state: null,
-    city: null,
-    jobType: null,
+    jobIndustry: searchParams.get("jobIndustry"),
+    state: searchParams.get("state"),
+    city: searchParams.get("city"),
+    jobType: searchParams.get("jobType"),
   });
+
+  useEffect(() => {
+    if (definedState) {
+      const availableCities = data.states.find((c) => c.name === definedState);
+      setCitiesList(availableCities.cities);
+    };
+  }, [definedState]);
 
   const onValidate = (value, name) => {
     setError((prev) => ({
@@ -105,8 +120,10 @@ export default function Filter() {
       console.error("Invalid Form!");
       return false;
     }
-
-    console.log("Data:", form);
+    navigate({
+      pathname: "/results",
+      search: `?${createSearchParams(form)}`,
+    });
   };
 
   return (
