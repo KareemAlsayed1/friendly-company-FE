@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import BarPlot from "./BarPlot";
 import LineChart from "./linechart";
 import Select from "react-select";
 import HashLoader from "react-spinners/HashLoader";
 
 export default function CompanyStats() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [lineOptions, setLineOptions] = useState([]);
   const [lineSeries, setLineSeries] = useState([]);
 
@@ -22,17 +25,23 @@ export default function CompanyStats() {
   const [loading, setLoading] = useState(false);
   const [jobIndustries, setJobIndustries] = useState([]);
 
-  let params = {
-    company_name: "MICROSOFT",
-  };
+  useEffect(() => {
+    let companyName = searchParams.get("company_name");
+    if (companyName) {
+      getChartData(companyName);
+    }
+  }, []);
 
-  let query = Object.keys(params)
-    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-    .join("&");
+  const getChartData = (companyName) => {
+    let params = {
+      company_name: companyName,
+    };
 
-  let url = "http://localhost:8000/search/?" + query;
-  const getChartData = () => {
-    const fetchAPI = url;
+    let query = Object.keys(params)
+      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+      .join("&");
+
+    const fetchAPI = "http://localhost:8000/search/?" + query;;
     setLoading(true);
     fetch(fetchAPI, {
       method: "GET",
@@ -103,9 +112,6 @@ export default function CompanyStats() {
     setLoading(false);
   };
 
-//   useEffect(() => {
-//     getChartData();
-//   }, []);
   return (
     <div>
       <div className="CompanyStats">
