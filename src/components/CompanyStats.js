@@ -4,6 +4,7 @@ import BarPlot from "./BarPlot";
 import LineChart from "./linechart";
 import Select from "react-select";
 import HashLoader from "react-spinners/HashLoader";
+import SearchBar from "./SearchBar";
 
 export default function CompanyStats() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,13 +25,13 @@ export default function CompanyStats() {
   const [savedData, setSavedData] = useState({});
   const [loading, setLoading] = useState(false);
   const [jobIndustries, setJobIndustries] = useState([]);
+  let companyName = searchParams.get("company_name");
 
   useEffect(() => {
-    let companyName = searchParams.get("company_name");
     if (companyName) {
       getChartData(companyName);
     }
-  }, []);
+  }, [companyName]);
 
   const getChartData = (companyName) => {
     let params = {
@@ -41,7 +42,7 @@ export default function CompanyStats() {
       .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
       .join("&");
 
-    const fetchAPI = "http://localhost:8000/search/?" + query;;
+    const fetchAPI = "http://localhost:8000/search/?" + query;
     setLoading(true);
     fetch(fetchAPI, {
       method: "GET",
@@ -127,33 +128,39 @@ export default function CompanyStats() {
           </div>
         ) : (
           <>
-            <LineChart
-              options={lineOptions}
-              series={lineSeries}
-              title={"Approval rate over years"}
-            />
-            <BarPlot
-              data={barData}
-              options={barOptions}
-              title={"Number of applicants per job industry"}
-            />
-            <LineChart
-              options={waitingLineOptions}
-              series={waitingLineSeries}
-              title={"Waiting times over years"}
-            />
-            <Select
-              options={jobIndustries}
-              defaultValue={wageCurrentChoice}
-              placeholder={wageCurrentChoice}
-              onChange={changeWageSelection}
-            />
-            <BarPlot
-              data={wageBarData}
-              options={wageBarOptions}
-              title={"Average wage based on job"}
-            />
-            <button onClick={getChartData}>Get Data</button>
+            <SearchBar />
+            {companyName ? (
+              <>
+                <LineChart
+                  options={lineOptions}
+                  series={lineSeries}
+                  title={"Approval rate over years"}
+                />
+                <BarPlot
+                  data={barData}
+                  options={barOptions}
+                  title={"Number of applicants per job industry"}
+                />
+                <LineChart
+                  options={waitingLineOptions}
+                  series={waitingLineSeries}
+                  title={"Waiting times over years"}
+                />
+                <Select
+                  options={jobIndustries}
+                  defaultValue={wageCurrentChoice}
+                  placeholder={wageCurrentChoice}
+                  onChange={changeWageSelection}
+                />
+                <BarPlot
+                  data={wageBarData}
+                  options={wageBarOptions}
+                  title={"Average wage based on job"}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </div>
