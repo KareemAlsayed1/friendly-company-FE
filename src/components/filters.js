@@ -58,7 +58,7 @@ export default function Filter() {
       const availableCities = data.states.find((c) => c.name === definedState);
       setCitiesList(availableCities.cities);
     };
-  }, [definedState]);
+  }, [definedState, data]);
 
   const onValidate = (value, name) => {
     setError((prev) => ({
