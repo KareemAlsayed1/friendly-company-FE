@@ -129,7 +129,6 @@ export default function Filter() {
   return (
     <div id="container">
       <div className="form">
-        <h2>Search Filters</h2>
         <Select
           name="jobIndustry"
           title="Job Industry"
