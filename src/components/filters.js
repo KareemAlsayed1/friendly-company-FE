@@ -42,11 +42,15 @@ export default function Filter() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const definedState = searchParams.get("state");
+  const definedJobIndustry = searchParams.get("jobIndustry");
+  const definedCity = searchParams.get("city");
+  const definedJobType = searchParams.get("jobType");
+
   const [form, setForm] = useState({
-    jobIndustry: searchParams.get("jobIndustry"),
-    state: searchParams.get("state"),
-    city: searchParams.get("city"),
-    jobType: searchParams.get("jobType"),
+    jobIndustry: definedJobIndustry,
+    state: definedState,
+    city: definedCity,
+    jobType: definedJobType,
   });
 
   useEffect(() => {
