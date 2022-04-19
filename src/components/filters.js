@@ -60,7 +60,6 @@ export default function Filter() {
   useEffect(() => {
     if (definedState) {
       const availableCities = City.getCitiesOfState(countryCode, definedState);
-      console.log(availableCities);
       const tmp = [];
       availableCities.forEach((city) => {
         tmp.push(city.name);
@@ -110,7 +109,6 @@ export default function Filter() {
           countryCode,
           value
         );
-        console.log(availableCities);
         const tmp = [];
         availableCities.forEach((city) => {
           tmp.push(city.name);
