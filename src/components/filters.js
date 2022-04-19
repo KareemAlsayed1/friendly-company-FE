@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import Select from "./Select";
 import { DATA_FOR_FILTERS } from "./constant";
 
+import { State, City } from "country-state-city";
+
 export default function Filter() {
   const data = DATA_FOR_FILTERS;
   const navigate = useNavigate();
@@ -18,10 +20,12 @@ export default function Filter() {
     jobIndustriesList.push(data.jobIndustries[key].name);
   }
 
+  const countryCode = "US";
+  const states = State.getStatesOfCountry(countryCode);
   const statesList = [];
-  for (key in data.states) {
-    statesList.push(data.states[key].name);
-  }
+  states.forEach((state) => {
+    statesList.push(state.isoCode);
+  });
 
   const jobTypesList = [];
   for (key in data.jobTypes) {
@@ -55,10 +59,15 @@ export default function Filter() {
 
   useEffect(() => {
     if (definedState) {
-      const availableCities = data.states.find((c) => c.name === definedState);
-      setCitiesList(availableCities.cities);
-    };
-  }, [definedState, data]);
+      const availableCities = City.getCitiesOfState(countryCode, definedState);
+      console.log(availableCities);
+      const tmp = [];
+      availableCities.forEach((city) => {
+        tmp.push(city.name);
+      });
+      setCitiesList(tmp);
+    }
+  }, [definedState, countryCode]);
 
   const onValidate = (value, name) => {
     setError((prev) => ({
@@ -97,8 +106,16 @@ export default function Filter() {
         [name]: value,
       }));
       if (name === "state") {
-        const availableCities = data.states.find((c) => c.name === value);
-        setCitiesList(availableCities.cities);
+        const availableCities = City.getCitiesOfState(
+          countryCode,
+          value
+        );
+        console.log(availableCities);
+        const tmp = [];
+        availableCities.forEach((city) => {
+          tmp.push(city.name);
+        });
+        setCitiesList(tmp);
       }
     },
     [data]
