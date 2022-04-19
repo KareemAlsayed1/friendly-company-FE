@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import BarPlot from "./BarPlot";
 import LineChart from "./linechart";
 import Select from "react-select";
 import HashLoader from "react-spinners/HashLoader";
+import SearchBar from "./SearchBar";
 
 export default function CompanyStats() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [lineOptions, setLineOptions] = useState([]);
   const [lineSeries, setLineSeries] = useState([]);
 
@@ -21,18 +25,24 @@ export default function CompanyStats() {
   const [savedData, setSavedData] = useState({});
   const [loading, setLoading] = useState(false);
   const [jobIndustries, setJobIndustries] = useState([]);
+  let companyName = searchParams.get("company_name");
 
-  let params = {
-    company_name: "MICROSOFT",
-  };
+  useEffect(() => {
+    if (companyName) {
+      getChartData(companyName);
+    }
+  }, [companyName]);
 
-  let query = Object.keys(params)
-    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-    .join("&");
+  const getChartData = (companyName) => {
+    let params = {
+      company_name: companyName,
+    };
 
-  let url = "http://localhost:8000/search/?" + query;
-  const getChartData = () => {
-    const fetchAPI = url;
+    let query = Object.keys(params)
+      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+      .join("&");
+
+    const fetchAPI = "http://localhost:8000/search/?" + query;
     setLoading(true);
     fetch(fetchAPI, {
       method: "GET",
@@ -103,9 +113,6 @@ export default function CompanyStats() {
     setLoading(false);
   };
 
-//   useEffect(() => {
-//     getChartData();
-//   }, []);
   return (
     <div>
       <div className="CompanyStats">
@@ -121,33 +128,39 @@ export default function CompanyStats() {
           </div>
         ) : (
           <>
-            <LineChart
-              options={lineOptions}
-              series={lineSeries}
-              title={"Approval rate over years"}
-            />
-            <BarPlot
-              data={barData}
-              options={barOptions}
-              title={"Number of applicants per job industry"}
-            />
-            <LineChart
-              options={waitingLineOptions}
-              series={waitingLineSeries}
-              title={"Waiting times over years"}
-            />
-            <Select
-              options={jobIndustries}
-              defaultValue={wageCurrentChoice}
-              placeholder={wageCurrentChoice}
-              onChange={changeWageSelection}
-            />
-            <BarPlot
-              data={wageBarData}
-              options={wageBarOptions}
-              title={"Average wage based on job"}
-            />
-            <button onClick={getChartData}>Get Data</button>
+            <SearchBar />
+            {companyName ? (
+              <>
+                <LineChart
+                  options={lineOptions}
+                  series={lineSeries}
+                  title={"Approval rate over years"}
+                />
+                <BarPlot
+                  data={barData}
+                  options={barOptions}
+                  title={"Number of applicants per job industry"}
+                />
+                <LineChart
+                  options={waitingLineOptions}
+                  series={waitingLineSeries}
+                  title={"Waiting times over years"}
+                />
+                <Select
+                  options={jobIndustries}
+                  defaultValue={wageCurrentChoice}
+                  placeholder={wageCurrentChoice}
+                  onChange={changeWageSelection}
+                />
+                <BarPlot
+                  data={wageBarData}
+                  options={wageBarOptions}
+                  title={"Average wage based on job"}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </div>
