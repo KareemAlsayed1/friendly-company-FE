@@ -42,12 +42,12 @@ const CompaniesList = (props) => {
 
   return (
     <div>
-      <div style={{ height: 527, width: 1350 }}>
+      <div style={{ height: 660, width: 1350 }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
           onRowClick={(params, event, details) =>
             handleSubmit(params.row.name.toUpperCase())
           }
