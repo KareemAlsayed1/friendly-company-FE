@@ -50,6 +50,7 @@ const BarPlot = (props) => {
         type="bar"
         height={350}
         title={props.title}
+        width={700}
       />
     </div>
   );

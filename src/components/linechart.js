@@ -45,6 +45,7 @@ const LineChart = (props) => {
         title={props.title}
         type="line"
         height={350}
+        width={700}
       />
     </div>
   );

@@ -116,6 +116,12 @@ export default function CompanyStats() {
     setLoading(false);
   };
 
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
   return (
     <div>
       <div>
@@ -136,35 +142,49 @@ export default function CompanyStats() {
           </div>
         ) : (
           <>
-            <SearchBar />
             {companyName ? (
               <>
-                <LineChart
-                  options={lineOptions}
-                  series={lineSeries}
-                  title={"Approval rate over years"}
-                />
-                <BarPlot
-                  data={barData}
-                  options={barOptions}
-                  title={"Number of applicants per job industry"}
-                />
-                <LineChart
-                  options={waitingLineOptions}
-                  series={waitingLineSeries}
-                  title={"Waiting times over years"}
-                />
-                <Select
-                  options={jobIndustries}
-                  defaultValue={wageCurrentChoice}
-                  placeholder={wageCurrentChoice}
-                  onChange={changeWageSelection}
-                />
-                <BarPlot
-                  data={wageBarData}
-                  options={wageBarOptions}
-                  title={"Average wage based on job"}
-                />
+                <div id="company-stats-title">
+                  <h2>{toTitleCase (companyName)}</h2>
+                  <SearchBar />
+                </div>
+                <div id="company-stats-row">
+                  <LineChart
+                    options={lineOptions}
+                    series={lineSeries}
+                    title={"Approval rate over years"}
+                    id="graph"
+                  />
+                  <BarPlot
+                    data={barData}
+                    options={barOptions}
+                    title={"Number of applicants per job industry"}
+                  />
+                </div>
+                <div id="company-stats-row">
+                  <div>
+                    <Select
+                      options={jobIndustries}
+                      defaultValue={wageCurrentChoice}
+                      placeholder={wageCurrentChoice}
+                      onChange={changeWageSelection}
+                    />
+                    <div id="wait-time">
+                      <LineChart
+                        options={waitingLineOptions}
+                        series={waitingLineSeries}
+                        title={"Waiting times over years"}
+                      />
+                    </div>
+                  </div>
+                  <div id="last-row">
+                    <BarPlot
+                      data={wageBarData}
+                      options={wageBarOptions}
+                      title={"Average wage based on job"}
+                    />
+                  </div>
+                </div>
               </>
             ) : (
               <></>

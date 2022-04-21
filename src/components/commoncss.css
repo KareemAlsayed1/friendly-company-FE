@@ -61,3 +61,29 @@
     margin-top: 20px;
     margin-left: 20px;
 }
+
+#company-stats-title {
+    margin-top: 65px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+#company-stats-row {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#wait-time{
+    margin-top: 30px;
+}
+
+#last-row {
+    margin-top: 66px;
+}
