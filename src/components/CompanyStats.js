@@ -117,10 +117,10 @@ export default function CompanyStats() {
   };
 
   function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return str.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-}
+  }
 
   return (
     <div>
@@ -143,7 +143,7 @@ export default function CompanyStats() {
             {companyName ? (
               <>
                 <div id="company-stats-title">
-                  <h2>{toTitleCase (companyName)}</h2>
+                  <h2>{toTitleCase(companyName)}</h2>
                   <SearchBar />
                 </div>
                 <div id="company-stats-row">
