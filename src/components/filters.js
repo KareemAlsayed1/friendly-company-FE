@@ -53,7 +53,7 @@ export default function Filter() {
   const [form, setForm] = useState({
     jobIndustry: definedJobIndustry,
     state: definedState,
-    city: definedCity,
+    city: 'N/A',
     jobType: definedJobType,
   });
 
@@ -179,14 +179,14 @@ export default function Filter() {
             Find Companies
           </Button>
         </div>
-        <Select
+        {/* <Select
           name="city"
           title="City"
           value={form.city}
           options={generateOptions(citiesList)}
           onChangeFunc={onHandleChange}
           {...error.city}
-        />
+        /> */}
       </div>
     </div>
   );

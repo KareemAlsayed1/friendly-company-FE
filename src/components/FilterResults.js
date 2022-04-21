@@ -80,9 +80,11 @@ export default function FilterResults() {
         </div>
       ) : (
         <div>
-          <h2>Search Results</h2>
+          <h2 id="results-title">Search Results</h2>
           <Filter />
-          <CompaniesList companies={companiesList} />
+          <div id="results-table">
+            <CompaniesList companies={companiesList} />
+          </div>
         </div>
       )}
     </div>
