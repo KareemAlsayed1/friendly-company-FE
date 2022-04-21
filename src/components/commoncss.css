@@ -1,0 +1,50 @@
+.header {
+    padding: 25px 0;
+    text-align: left;
+    background: rgba(244, 244, 244, 0.5);
+  }
+.header img {
+    width: 200px;
+    /* height: 13px; */
+    margin-left: 30px;
+}
+
+#filter-home {
+    display: flex;
+    flex-direction: column;
+}
+
+#filter-row {
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    margin-top: 35px;
+}
+
+#filter-search-row {
+    margin-top: 65px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
+
+#filter-button {
+    margin-top: 45px;
+    width: 250px;
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+}
+
+#button-area {
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+}
+
+#filter-industry{
+    width: 200px;
+}

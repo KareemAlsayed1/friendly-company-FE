@@ -147,24 +147,38 @@ export default function Filter() {
 
   return (
     <div id="container">
-      <div className="form">
-        <Select
-          name="jobIndustry"
-          title="Job Industry"
-          value={form.jobIndustry}
-          options={generateOptions(jobIndustriesList)}
-          onChangeFunc={onHandleChange}
-          {...error.jobIndustry}
-        />
-        <Select
-          name="state"
-          title="State"
-          value={form.state}
-          options={generateOptions(statesList)}
-          onChangeFunc={onHandleChange}
-          {...error.state}
-        />
-
+      <div className="form" id="filter-home">
+        <div id="filter-row">
+          <Select
+            name="jobIndustry"
+            title="Job Industry"
+            value={form.jobIndustry}
+            options={generateOptions(jobIndustriesList)}
+            onChangeFunc={onHandleChange}
+            {...error.jobIndustry}
+          />
+          <Select
+            name="state"
+            title="State"
+            value={form.state}
+            options={generateOptions(statesList)}
+            onChangeFunc={onHandleChange}
+            {...error.state}
+          />
+          <Select
+            name="jobType"
+            title="Job Type"
+            value={form.jobType}
+            options={generateOptions(jobTypesList)}
+            onChangeFunc={onHandleChange}
+            {...error.jobType}
+          />
+        </div>
+        <div id={"button-area"}>
+          <Button id={"filter-button"} variant="outlined" onClick={handleSubmit}>
+            Find Companies
+          </Button>
+        </div>
         <Select
           name="city"
           title="City"
@@ -173,18 +187,6 @@ export default function Filter() {
           onChangeFunc={onHandleChange}
           {...error.city}
         />
-
-        <Select
-          name="jobType"
-          title="Job Type"
-          value={form.jobType}
-          options={generateOptions(jobTypesList)}
-          onChangeFunc={onHandleChange}
-          {...error.jobType}
-        />
-        <Button variant="outlined" onClick={handleSubmit}>
-          Find Companies
-        </Button>
       </div>
     </div>
   );

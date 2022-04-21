@@ -52,7 +52,7 @@ export default function SearchBar() {
             onChange={(e) => setInputText(e.target.value.toUpperCase())}
             variant="outlined"
             fullWidth
-            placeholder="Or search company name"
+            placeholder="Search company name"
           />
           <IconButton
             onClick={handleSubmit}

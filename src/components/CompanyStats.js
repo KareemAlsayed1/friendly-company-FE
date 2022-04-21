@@ -6,6 +6,9 @@ import Select from "react-select";
 import HashLoader from "react-spinners/HashLoader";
 import SearchBar from "./SearchBar";
 
+import "./commoncss.css";
+import logoUrl from '../logo.svg';
+
 export default function CompanyStats() {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -115,6 +118,11 @@ export default function CompanyStats() {
 
   return (
     <div>
+      <div>
+        <div className="header">
+            <img src={logoUrl} alt="Logo" />
+        </div>
+      </div>
       <div className="CompanyStats">
         {loading ? (
           <div className="loading-section">
@@ -122,7 +130,7 @@ export default function CompanyStats() {
               color={"#008ffb"}
               loading={loading}
               size={120}
-              css={"align-self: center; margin-top:25%;"}
+              css={"align-self: center; margin-top:20%;"}
             />
             <div className="loading-text"> Getting the data for you </div>
           </div>

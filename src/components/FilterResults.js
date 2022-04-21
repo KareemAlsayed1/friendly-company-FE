@@ -7,6 +7,9 @@ import Filter from "./filters";
 import CompaniesList from "./CompaniesList";
 import HashLoader from "react-spinners/HashLoader";
 
+import "./commoncss.css";
+import logoUrl from '../logo.svg';
+
 export default function FilterResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const definedState = searchParams.get("state");
@@ -60,6 +63,11 @@ export default function FilterResults() {
 
   return (
     <div>
+      <div>
+        <div className="header">
+            <img src={logoUrl} alt="Logo" />
+        </div>
+      </div>
       {loading ? (
         <div className="loading-section">
           <HashLoader
