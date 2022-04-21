@@ -1,5 +1,5 @@
 <p align="center">
- <img align="center" alt="Logo" src="./logo.png" width="250"/>
+ <img align="center" alt="Logo" src="./img/logo.png" width="250"/>
 </p>
 
 # Visualizing H1B-Friendly Companies
@@ -13,13 +13,14 @@ This is a data analysis and visualization project that displays H1B sponsorship-
 The major search functions of the website that the users can perform include:
 - Users can use search filters to access a relevant and customized set of data by using search filters. The filters they can set include the job industry they wish to work in, the US state they wish to work in, and whether they wish to work as a full-time or part-time employer.
 - Users can also directly search the name of the company and access the searched company's H1B sponsorship-related data.
+![search_result](./img/search_result.png)
 
 The H1B sponsorship-related data per company that the users can access include:
 - The company's H1B LCA approval rate over the years
 - The company's waiting time for H1B LCA over the years
 - The number of applicants sponsored by the company per job industry in 2021 (most recent data)
 - The average salary of the jobs sponsored by the company in 2021 (most recent data)
-
+![company_stats_example](./img/company_plots_example.png)
 ## Run the project
 
 ### Run the project locally
@@ -130,7 +131,7 @@ The frontend and backend server of this project are in two different repos. Henc
     ```
 
 5. Open your web browser and go to the URL ```http://localhost:3000```. The expected result is
-![welcome_page](./welcome_page.png)
+![welcome_page](./img/welcome_page.png)
 
 ## Built with
 
