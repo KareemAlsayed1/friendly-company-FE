@@ -7,7 +7,7 @@ import HashLoader from "react-spinners/HashLoader";
 import SearchBar from "./SearchBar";
 
 import "./commoncss.css";
-import logoUrl from '../logo.svg';
+import Header from "./Header";
 
 export default function CompanyStats() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -125,9 +125,7 @@ export default function CompanyStats() {
   return (
     <div>
       <div>
-        <div className="header">
-            <img src={logoUrl} alt="Logo" />
-        </div>
+        <Header />
       </div>
       <div className="CompanyStats">
         {loading ? (

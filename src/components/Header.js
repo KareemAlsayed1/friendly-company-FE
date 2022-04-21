@@ -1,0 +1,14 @@
+import React from "react";
+import logoUrl from '../logo.svg';
+
+export default function Header() {
+  return (
+    <div className="header">
+      <img
+        src={logoUrl}
+        alt="Logo"
+        onClick={() => window.location.replace("/")}
+      />
+    </div>
+  );
+}
