@@ -18,6 +18,9 @@ const BarPlot = (props) => {
     },
     xaxis: {
       categories: props.options,
+      title: {
+        text: props.xaxisTitle
+      }
     },
     title: {
       text: props.title,
@@ -37,7 +40,7 @@ const BarPlot = (props) => {
 
   const series = [
     {
-      name: props.title,
+      name: props.seriesName,
       data: props.data,
     },
   ]

@@ -28,6 +28,14 @@ const LineChart = (props) => {
     },
     xaxis: {
       categories: props.options,
+      title: {
+        text: props.xaxisTitle
+      }
+    },
+    yaxis: {
+      title: {
+        text: props.yaxisTitle
+      }
     },
   };
 

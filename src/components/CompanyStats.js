@@ -151,12 +151,16 @@ export default function CompanyStats() {
                     options={lineOptions}
                     series={lineSeries}
                     title={"Approval rate over years"}
+                    xaxisTitle={"Year"}
+                    yaxisTitle={"Approval rate"}
                     id="graph"
                   />
                   <BarPlot
                     data={barData}
                     options={barOptions}
-                    title={"Number of applicants per job industry"}
+                    title={"Number of applicants per job industry (2021)"}
+                    seriesName={"Number of applicants"}
+                    xaxisTitle={"Number of applicants"}
                   />
                 </div>
                 <div id="company-stats-row">
@@ -165,6 +169,8 @@ export default function CompanyStats() {
                       options={waitingLineOptions}
                       series={waitingLineSeries}
                       title={"Waiting times over years"}
+                      xaxisTitle={"Year"}
+                      yaxisTitle={"Waiting time (days)"}
                     />
                   </div>
                   <div>
@@ -178,7 +184,9 @@ export default function CompanyStats() {
                       <BarPlot
                         data={wageBarData}
                         options={wageBarOptions}
-                        title={"Average wage based on job"}
+                        title={`Average wage for jobs in ${wageCurrentChoice} (2021)`}
+                        seriesName={"Average wage"}
+                        xaxisTitle={"Average wage (USD)"}
                       />
                     </div>
                   </div>
