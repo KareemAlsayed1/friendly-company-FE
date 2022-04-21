@@ -13,9 +13,11 @@ const CompaniesList = (props) => {
   console.log(companies);
   function createData(id, company) {
     const name = company.name;
-    const approval_rate = company.approval_rate;
-    const wage_range = `${company.wage_range[0]}-${company.wage_range[1]}`;
-    return { id, name, approval_rate, wage_range };
+    const approval_rate = `${Math.round(company.approval_rate)}%`;
+    const wage_range = `$${Math.round(company.wage_range[0])} - $${Math.round(company.wage_range[1])}`;
+    const average_wage = `$${Math.round(company.average_wage)}`;
+
+    return { id, name, approval_rate, wage_range, average_wage};
   }
   const rows = [];
   for (var key in companies) {
@@ -25,9 +27,10 @@ const CompaniesList = (props) => {
   }
 
   const columns = [
-    { field: "name", headerName: "Company Name", width: 130 },
-    { field: "approval_rate", headerName: "Approval rate", width: 130 },
-    { field: "wage_range", headerName: "Wage range", width: 130 },
+    { field: "name", headerName: "Company Name", width: 800 },
+    { field: "approval_rate", headerName: "Approval rate", width: 170 },
+    { field: "wage_range", headerName: "Wage range (Min - Max)", width: 180 },
+    { field: "average_wage", headerName: "Average Wage", width: 170 },
   ];
 
   const handleSubmit = (companyName) => {
@@ -39,12 +42,12 @@ const CompaniesList = (props) => {
 
   return (
     <div>
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 632, width: "70%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
           onRowClick={(params, event, details) =>
             handleSubmit(params.row.name.toUpperCase())
           }
