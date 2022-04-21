@@ -160,6 +160,13 @@ export default function CompanyStats() {
                   />
                 </div>
                 <div id="company-stats-row">
+                  <div id="wait-time">
+                    <LineChart
+                      options={waitingLineOptions}
+                      series={waitingLineSeries}
+                      title={"Waiting times over years"}
+                    />
+                  </div>
                   <div>
                     <Select
                       options={jobIndustries}
@@ -167,20 +174,13 @@ export default function CompanyStats() {
                       placeholder={wageCurrentChoice}
                       onChange={changeWageSelection}
                     />
-                    <div id="wait-time">
-                      <LineChart
-                        options={waitingLineOptions}
-                        series={waitingLineSeries}
-                        title={"Waiting times over years"}
+                    <div id="last-row">
+                      <BarPlot
+                        data={wageBarData}
+                        options={wageBarOptions}
+                        title={"Average wage based on job"}
                       />
                     </div>
-                  </div>
-                  <div id="last-row">
-                    <BarPlot
-                      data={wageBarData}
-                      options={wageBarOptions}
-                      title={"Average wage based on job"}
-                    />
                   </div>
                 </div>
               </>
