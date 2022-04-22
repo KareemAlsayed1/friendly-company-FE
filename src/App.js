@@ -11,6 +11,7 @@ import React from "react";
 import CompanyStats from "./components/CompanyStats";
 import Home from "./components/Home";
 import FilterResults from "./components/FilterResults";
+import About from "./components/About";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/company" element={<CompanyStats/>} />
         <Route exact path="/results" element={<FilterResults/>} />
+        <Route exact path="/about" element={<About/>} />
         <Route path="*" element={<Navigate to ="/" />}/>
       </Routes>
     </Router>
