@@ -1,5 +1,5 @@
 import React from "react";
-import logoUrl from '../logo.svg';
+import logoUrl from "../logo.svg";
 
 export default function Header() {
   return (
@@ -9,6 +9,9 @@ export default function Header() {
         alt="Logo"
         onClick={() => window.location.replace("/")}
       />
+      <div id="navList">
+        <a href={"/about"} style={{textDecoration: "none"}}>About Us</a>
+      </div>
     </div>
   );
 }
